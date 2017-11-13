@@ -22,7 +22,7 @@ at https://cloud.google.com/pubsub/docs.
 """
 
 import time
-from google.cloud import pubsub_v1
+from google.cloud import pubsub as pubsub_v1
 
 
 def list_subscriptions_in_topic(project, topic_name):
