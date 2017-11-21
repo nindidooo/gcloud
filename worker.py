@@ -98,11 +98,11 @@ def receive_messages(project, subscription_name):
             print('object_id', object_id)
 
             print('downloading object...')
-            download = 'gsutil cp gs://' + bucket_id + '/' + object_id + ' .'
+            download = 'sudo gsutil cp gs://' + bucket_id + '/' + object_id + ' .'
 
             os.system(download)
 
-            remove = 'gsutil rm gs://' + bucket_id + '/' + object_id
+            remove = 'sudo gsutil rm gs://' + bucket_id + '/' + object_id
 
             os.system(remove)
 
