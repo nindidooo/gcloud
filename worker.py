@@ -23,6 +23,9 @@ at https://cloud.google.com/pubsub/docs.
 
 import time
 from google.cloud import pubsub as pubsub_v1
+import os
+
+import json
 
 
 def list_subscriptions_in_topic(project, topic_name):
@@ -74,7 +77,35 @@ def receive_messages(project, subscription_name):
         project, subscription_name)
 
     def callback(message):
+        print('\ninside function: receive_messages\n')
         print('Received message: {}'.format(message))
+        print('MATT Received message: {}'.format(message.data))
+
+        attributes = message.attributes
+        event_type = attributes['eventType']
+
+        if event_type == 'OBJECT_FINALIZE':
+            data = message.data
+            msg_data = json.loads(data)
+            mediaLink = msg_data["mediaLink"]
+
+            print('\nreceived file: ', mediaLink)
+
+            bucket_id = attributes['bucketId']
+            object_id = attributes['objectId']
+
+            print('bucket_id', bucket_id)
+            print('object_id', object_id)
+
+            print('downloading object...')
+            download = 'gsutil cp gs://' + bucket_id + '/' + object_id + ' .'
+
+            os.system(download)
+
+            remove = 'gsutil rm gs://' + bucket_id + '/' + object_id
+
+            os.system(remove)
+
         message.ack()
 
     subscriber.subscribe(subscription_path, callback=callback)
@@ -93,8 +124,9 @@ def receive_messages_with_flow_control(project, subscription_name):
         project, subscription_name)
 
     def callback(message):
+        print('\ninside function: receive_messages_with_flow_control\n')
         print('Received message: {}'.format(message))
-        print('Received message: {}'.format(message.data))
+        print('MATT Received message: {}'.format(message.data))
         message.ack()
 
     # Limit the subscriber to only have ten outstanding messages at a time.
