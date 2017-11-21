@@ -166,6 +166,6 @@ def receive_messages_with_flow_control(project, subscription_name):
 
 if __name__ == '__main__':
     PROJECT_NAME = "firelearn-122c1"
-    SUBSCRIPTION_NAME = "onsabimana_topic_subscription"
+    SUBSCRIPTION_NAME = "firelearn-122c1.appspot.com"
 
     receive_messages(PROJECT_NAME, SUBSCRIPTION_NAME)
