@@ -16,4 +16,4 @@ curl https://bootstrap.pypa.io/get-pip.py | sudo python
 
 sudo pip install -r requirements.txt
 
-python worker.py --subscription onsabimana_topic_subscription --dataset_id=onsabimana_media_processing --table_id=speech
+python worker.py
