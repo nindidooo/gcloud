@@ -106,7 +106,7 @@ def receive_messages(project, subscription_name):
             print('bucket_id', bucket_id)
             print('object_id', object_id)
 
-            if '.3gp' in object_id:
+            if '.3gp' in object_id or '.aac' in object_id:
 
                 print('downloading object...')
 
