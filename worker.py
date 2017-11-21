@@ -26,6 +26,7 @@ from google.cloud import pubsub as pubsub_v1
 import os
 
 import json
+import makemidi
 
 
 def list_subscriptions_in_topic(project, topic_name):
@@ -77,34 +78,56 @@ def receive_messages(project, subscription_name):
         project, subscription_name)
 
     def callback(message):
-        print('\ninside function: receive_messages\n')
-        print('Received message: {}'.format(message))
-        print('MATT Received message: {}'.format(message.data))
 
         attributes = message.attributes
         event_type = attributes['eventType']
 
+        bucket_id = attributes['bucketId']
+        object_id = attributes['objectId']
+
+        if event_type == 'OBJECT_DELETE':
+
+            print('\n ######################## ' + object_id + ' DELETED FROM STORAGE ########################')
+
+            # print('\ninside function: receive_messages\n')
+            # print('Received message: {}'.format(message))
+            # print('MATT Received message: {}'.format(message.data))
+
         if event_type == 'OBJECT_FINALIZE':
+
+            print('\n ######################## ' + object_id + ' UPLOADED TO STORAGE ########################')
+
             data = message.data
             msg_data = json.loads(data)
             mediaLink = msg_data["mediaLink"]
 
             print('\nreceived file: ', mediaLink)
 
-            bucket_id = attributes['bucketId']
-            object_id = attributes['objectId']
-
             print('bucket_id', bucket_id)
             print('object_id', object_id)
 
-            print('downloading object...')
-            download = 'sudo gsutil cp gs://' + bucket_id + '/' + object_id + ' .'
+            if '.3gp' in object_id:
 
-            os.system(download)
+                print('downloading object...')
 
-            remove = 'sudo gsutil rm gs://' + bucket_id + '/' + object_id
+                download = 'gsutil cp gs://' + bucket_id + '/' + object_id + ' .'
 
-            os.system(remove)
+                os.system(download)
+
+                #### HERE IS WHERE ALGORITHM GOES #####
+                # create midi file
+                midi_filename = "major-scale.mid"
+                makemidi.create_midi(midi_filename)
+
+                #######################################
+
+                # On completion, remove input audio file from storage...
+                remove = 'gsutil rm gs://' + bucket_id + '/' + object_id
+                os.system(remove)
+
+                print('\nuploading midi...')
+                upload_midi = 'gsutil cp ' + midi_filename + ' gs://' + bucket_id
+                os.system(upload_midi)
 
         message.ack()
 
