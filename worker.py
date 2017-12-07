@@ -27,6 +27,7 @@ import os
 
 import json
 import makemidi
+import subprocess
 
 
 def list_subscriptions_in_topic(project, topic_name):
@@ -106,13 +107,30 @@ def receive_messages(project, subscription_name):
             print('bucket_id', bucket_id)
             print('object_id', object_id)
 
-            if '.3gp' in object_id or '.aac' in object_id:
+            if '.3gp' in object_id or '.aac' in object_id or '.adts' in object_id:
 
                 print('downloading object...')
 
-                download = 'gsutil cp gs://' + bucket_id + '/' + object_id + ' .'
+                file = ' gs://' + bucket_id + '/' + object_id
+
+                download = 'gsutil cp ' + file + ' .'
 
                 os.system(download)
+
+                # file has been downloaded to vitrual agent
+
+                # now get metadata of the file
+
+                # print('getting metadata...')
+                # getmetadata = 'gsutil ls -L ' + file
+                # os.system(getmetadata)
+
+                # now get hash of the file
+                gethash = 'gsutil hash -c ' + file
+                os.system(gethash)
+                import os
+                hash = os.popen("dir").read()
+                print('hash is: ', hash)
 
                 #### HERE IS WHERE ALGORITHM GOES #####
                 # create midi file
@@ -122,12 +140,14 @@ def receive_messages(project, subscription_name):
                 #######################################
 
                 # On completion, remove input audio file from storage...
-                remove = 'gsutil rm gs://' + bucket_id + '/' + object_id
-                os.system(remove)
+                # remove = 'gsutil rm gs://' + bucket_id + '/' + object_id
+                # os.system(remove)
 
                 print('\nuploading midi...')
+                set_midi_metadata = 'gsutil setmeta -h x-goog-meta-userID:MATTHEW' + ' gs://' + bucket_id + '/' + midi_filename
                 upload_midi = 'gsutil cp ' + midi_filename + ' gs://' + bucket_id
                 os.system(upload_midi)
+                os.system(set_midi_metadata)
 
         message.ack()
 
