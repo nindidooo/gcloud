@@ -22,12 +22,13 @@ at https://cloud.google.com/pubsub/docs.
 """
 
 import time
-from google.cloud import pubsub as pubsub_v1
+from google.cloud import pubsub_v1 as pubsub_v1
 import os
 
 import json
 import makemidi
 import subprocess
+import os
 
 
 def list_subscriptions_in_topic(project, topic_name):
@@ -88,7 +89,8 @@ def receive_messages(project, subscription_name):
 
         if event_type == 'OBJECT_DELETE':
 
-            print('\n ######################## ' + object_id + ' DELETED FROM STORAGE ########################')
+            print('\n ######################## ' + object_id +
+                  ' DELETED FROM STORAGE ########################')
 
             # print('\ninside function: receive_messages\n')
             # print('Received message: {}'.format(message))
@@ -96,7 +98,8 @@ def receive_messages(project, subscription_name):
 
         if event_type == 'OBJECT_FINALIZE':
 
-            print('\n ######################## ' + object_id + ' UPLOADED TO STORAGE ########################')
+            print('\n ######################## ' + object_id +
+                  ' UPLOADED TO STORAGE ########################')
 
             data = message.data
             msg_data = json.loads(data)
@@ -126,15 +129,19 @@ def receive_messages(project, subscription_name):
                 # os.system(getmetadata)
 
                 # now get hash of the file
-                gethash = 'gsutil hash -c ' + file
-                os.system(gethash)
-                import os
-                hash = os.popen("dir").read()
-                print('hash is: ', hash)
+                gethash = 'gsutil hash -m ' + file
+                # os.system(gethash)
+
+                md5Hash = os.popen(gethash).read()[75:99]
+
+                print '\n\nhash is: ', md5Hash
+                # for line in hash:
+                #     if '\t'
+                #     print line
 
                 #### HERE IS WHERE ALGORITHM GOES #####
                 # create midi file
-                midi_filename = "major-scale.mid"
+                midi_filename = md5Hash + '.mid'  # "major-scale.mid"
                 makemidi.create_midi(midi_filename)
 
                 #######################################
@@ -144,7 +151,8 @@ def receive_messages(project, subscription_name):
                 # os.system(remove)
 
                 print('\nuploading midi...')
-                set_midi_metadata = 'gsutil setmeta -h x-goog-meta-userID:MATTHEW' + ' gs://' + bucket_id + '/' + midi_filename
+                set_midi_metadata = 'gsutil setmeta -h x-goog-meta-userID:MATTHEW' + \
+                    ' gs://' + bucket_id + '/' + midi_filename
                 upload_midi = 'gsutil cp ' + midi_filename + ' gs://' + bucket_id
                 os.system(upload_midi)
                 os.system(set_midi_metadata)
