@@ -22,7 +22,7 @@ at https://cloud.google.com/pubsub/docs
 """
 
 import time
-from google.cloud import pubsub_v1 as pubsub_v1
+from google.cloud import pubsub as pubsub_v1
 import os
 
 import json
@@ -164,9 +164,9 @@ def receive_messages(project, subscription_name):
                 os.system(set_midi_metadata)
 
         message.ack()
-        # print '\ncleaning out files:', midi_filename, ' and ', object_id
-        # os.system('rm -f *.mid')  # , midi_filename)
-        # os.system('rm -f *.aac')  # , object_id)
+        print '\ncleaning out files:', midi_filename, ' and ', object_id
+        os.system('rm -f *.mid')  # , midi_filename)
+        os.system('rm -f *.aac')  # , object_id)
 
         print('\n\nDONE')
 
