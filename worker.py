@@ -18,16 +18,24 @@
 """This application demonstrates how to perform basic operations on
 subscriptions with the Cloud Pub/Sub API.
 For more information, see the README.md under /pubsub and the documentation
-at https://cloud.google.com/pubsub/docs.
+at https://cloud.google.com/pubsub/docs.å
 """
 
 import time
-from google.cloud import pubsub as pubsub_v1
+from google.cloud import pubsub_v1 as pubsub_v1
 import os
 
 import json
 import makemidi
 import subprocess
+import os
+
+
+# # Import gcloud
+# from google.cloud import storage
+
+# # Enable Storage
+# client = storage.Client()
 
 
 def list_subscriptions_in_topic(project, topic_name):
@@ -88,7 +96,8 @@ def receive_messages(project, subscription_name):
 
         if event_type == 'OBJECT_DELETE':
 
-            print('\n ######################## ' + object_id + ' DELETED FROM STORAGE ########################')
+            print('\n ######################## ' + object_id +
+                  ' DELETED FROM STORAGE ########################')
 
             # print('\ninside function: receive_messages\n')
             # print('Received message: {}'.format(message))
@@ -96,7 +105,8 @@ def receive_messages(project, subscription_name):
 
         if event_type == 'OBJECT_FINALIZE':
 
-            print('\n ######################## ' + object_id + ' UPLOADED TO STORAGE ########################')
+            print('\n ######################## ' + object_id +
+                  ' UPLOADED TO STORAGE ########################')
 
             data = message.data
             msg_data = json.loads(data)
@@ -107,7 +117,7 @@ def receive_messages(project, subscription_name):
             print('bucket_id', bucket_id)
             print('object_id', object_id)
 
-            if '.3gp' in object_id or '.aac' in object_id or '.adts' in object_id:
+            if '.3gp' in object_id or '.aac' in object_id or '.adts' in object_id or '.mp3' in object_id:
 
                 print('downloading object...')
 
@@ -126,15 +136,23 @@ def receive_messages(project, subscription_name):
                 # os.system(getmetadata)
 
                 # now get hash of the file
-                gethash = 'gsutil hash -c ' + file
-                os.system(gethash)
-                import os
-                hash = os.popen("dir").read()
-                print('hash is: ', hash)
+                gethash = 'gsutil hash -m ' + file
+                # os.system(gethash)
+
+                md5Hash = os.popen(gethash).read()[75:99]
+
+                # filename
+                audio_filename = object_id[0:19]
+
+                print '\n\nhash is: ', md5Hash
+                # for line in hash:
+                #     if '\t'
+                #     print line
 
                 #### HERE IS WHERE ALGORITHM GOES #####
                 # create midi file
-                midi_filename = "major-scale.mid"
+                # midi_filename = md5Hash + '.mid'  # "major-scale.mid"
+                midi_filename = audio_filename + '.mid'
                 makemidi.create_midi(midi_filename)
 
                 #######################################
@@ -144,12 +162,18 @@ def receive_messages(project, subscription_name):
                 # os.system(remove)
 
                 print('\nuploading midi...')
-                set_midi_metadata = 'gsutil setmeta -h x-goog-meta-userID:MATTHEW' + ' gs://' + bucket_id + '/' + midi_filename
+                set_midi_metadata = 'gsutil setmeta -h x-goog-meta-userID:MATTHEW' + \
+                    ' gs://' + bucket_id + '/' + midi_filename
                 upload_midi = 'gsutil cp ' + midi_filename + ' gs://' + bucket_id
                 os.system(upload_midi)
                 os.system(set_midi_metadata)
 
         message.ack()
+        print '\ncleaning out files:', midi_filename, ' and ', object_id
+        os.system('rm -f *.mid')  # , midi_filename)
+        os.system('rm -f *.aac')  # , object_id)
+
+        print '\n\nDONE'
 
     subscriber.subscribe(subscription_path, callback=callback)
 
