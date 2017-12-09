@@ -10,7 +10,8 @@ def create_midi(midi_filename="major-scale.mid"):
     tempo = 60   # In BPM
     volume = 100  # 0-127, as per the MIDI standard
 
-    MyMIDI = MIDIFile(1)  # One track, defaults to format 1 (tempo track is created
+    # One track, defaults to format 1 (tempo track is created
+    MyMIDI = MIDIFile(1, adjust_origin=True)
     # automatically)
     MyMIDI.addTempo(track, time, tempo)
 
