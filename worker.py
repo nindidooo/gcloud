@@ -18,7 +18,7 @@
 """This application demonstrates how to perform basic operations on
 subscriptions with the Cloud Pub/Sub API.
 For more information, see the README.md under /pubsub and the documentation
-at https://cloud.google.com/pubsub/docs.å
+at https://cloud.google.com/pubsub/docs
 """
 
 import time
@@ -29,7 +29,6 @@ import json
 import makemidi
 import subprocess
 import os
-<<<<<<< HEAD
 
 
 # # Import gcloud
@@ -37,8 +36,6 @@ import os
 
 # # Enable Storage
 # client = storage.Client()
-=======
->>>>>>> origin/master
 
 
 def list_subscriptions_in_topic(project, topic_name):
@@ -139,30 +136,18 @@ def receive_messages(project, subscription_name):
                 # os.system(getmetadata)
 
                 # now get hash of the file
-                gethash = 'gsutil hash -m ' + file
-                # os.system(gethash)
+                # gethash = 'gsutil hash -m ' + file
+                # # os.system(gethash)
 
-                md5Hash = os.popen(gethash).read()[75:99]
-
-<<<<<<< HEAD
-                # filename
-                audio_filename = object_id[0:19]
-
-=======
->>>>>>> origin/master
-                print '\n\nhash is: ', md5Hash
-                # for line in hash:
-                #     if '\t'
-                #     print line
+                # md5Hash = os.popen(gethash).read()[75:99]
+                # midi_filename = md5Hash + '.mid'  # "major-scale.mid"
 
                 #### HERE IS WHERE ALGORITHM GOES #####
                 # create midi file
-<<<<<<< HEAD
-                # midi_filename = md5Hash + '.mid'  # "major-scale.mid"
+                audio_filename = object_id[0:19]
+
                 midi_filename = audio_filename + '.mid'
-=======
-                midi_filename = md5Hash + '.mid'  # "major-scale.mid"
->>>>>>> origin/master
+
                 makemidi.create_midi(midi_filename)
 
                 #######################################
@@ -179,11 +164,11 @@ def receive_messages(project, subscription_name):
                 os.system(set_midi_metadata)
 
         message.ack()
-        print '\ncleaning out files:', midi_filename, ' and ', object_id
-        os.system('rm -f *.mid')  # , midi_filename)
-        os.system('rm -f *.aac')  # , object_id)
+        # print '\ncleaning out files:', midi_filename, ' and ', object_id
+        # os.system('rm -f *.mid')  # , midi_filename)
+        # os.system('rm -f *.aac')  # , object_id)
 
-        print '\n\nDONE'
+        print('\n\nDONE')
 
     subscriber.subscribe(subscription_path, callback=callback)
 
