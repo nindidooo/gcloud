@@ -29,6 +29,7 @@ import json
 import makemidi
 import subprocess
 import os
+<<<<<<< HEAD
 
 
 # # Import gcloud
@@ -36,6 +37,8 @@ import os
 
 # # Enable Storage
 # client = storage.Client()
+=======
+>>>>>>> origin/master
 
 
 def list_subscriptions_in_topic(project, topic_name):
@@ -141,9 +144,12 @@ def receive_messages(project, subscription_name):
 
                 md5Hash = os.popen(gethash).read()[75:99]
 
+<<<<<<< HEAD
                 # filename
                 audio_filename = object_id[0:19]
 
+=======
+>>>>>>> origin/master
                 print '\n\nhash is: ', md5Hash
                 # for line in hash:
                 #     if '\t'
@@ -151,8 +157,12 @@ def receive_messages(project, subscription_name):
 
                 #### HERE IS WHERE ALGORITHM GOES #####
                 # create midi file
+<<<<<<< HEAD
                 # midi_filename = md5Hash + '.mid'  # "major-scale.mid"
                 midi_filename = audio_filename + '.mid'
+=======
+                midi_filename = md5Hash + '.mid'  # "major-scale.mid"
+>>>>>>> origin/master
                 makemidi.create_midi(midi_filename)
 
                 #######################################
