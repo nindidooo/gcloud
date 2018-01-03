@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "databaseName": "https://sheetmuse.firebaseio.com/",
+  "project_id": "sheetmuse-190514",
+  "private_key_id": "61e895319785e4b1be433c9c2f0cd2b0cea0f398",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCsih/elNtzPeaE\ntIrG8HLYLed/WEjUQPRAoJWfaRdfr5vF6o1PfW4hFwXuO056ycSATcGDXkr0hA1/\nQ6IgEfBYVjVnuhsiKAcQWIYn8Zc8z4D7+Ws1Jeajmcm69fUYQ0nVsm1oiepQmNgN\nH3lkLJU2Nd46d/aRwvc6bG/3xMKFeT+rMDOnjLleDG5UehXqXDPiVu4YPLoXn24B\nWlP2uXjetvVeGpVMc0Vip8YaKq8PJUB2ZWLh50QUC17FxfLC2HmKOPWouUZnfLcT\nTk+fPPaO/AaVWlzjFqq8r5UHiCgAk86tL8GC8XYLoUY1eQ5Z5qVCAg6aCEZl4tOO\nM5Rj3nUVAgMBAAECggEALe51TnU1OGgNol1Hpm8jO4541qtDdBG4lC3LtwysdsIS\nh20J4lPjSfbNkt6B5WkqIPfSIK0s6gvvZeY01jHAWFvWyr6982lRfBX83MxRNRSO\nY0XCNvtYe0v46ocIkMV09ekSfCZe1MbjmRa8Y6EEtdJATzNZVfNfilOMuRpNqGcu\nqN8xhrA8iJStPJJk5iFUXN/qTNdk7JqvckMDilhAjoGtbplLXgavPV6UcTXNUsdz\nnQi0jT17A9dLRiNOPvYC8p4J4qecF3mxG8p+hpCXkb9azIKcL3aQJ0OB2SJ//VqF\n2l5hIAxmoUlX8MBLJANF2iH/uOPMi0BEaTT9p/iOnwKBgQDqwpr9W4O5ID/F5JvR\nkJHQFnVV2SMgckOI9248XLyLx9zoqAZjJdtf9dziEAEZdm9tfjLqFLtw4fa+Gh1Q\nWG7PwcnnUmCPn+ulZ5hhvYrhrKn2/nmC/ErvrxOpcfq3DX7Q7Aiy4ws9kZmqfDt6\nN0YBnRuZjeiuXVghSO5Sqb7hawKBgQC8JmWXSkU/La13BUOLHs6wcom4ZkhUxrXG\nqmB0lO+gSORdsJo1dlXY4N6OUhLGJlOq8qzeeXVz18w6K5he4neLrbLzLmfRENWT\n+ngCkf7DURsm+TTRJ7UaP+R+Tx9M9S/8wD8qaOkFR0CxI1kXycJWuFZdwyMwmYDc\n4BG/Z9EjfwKBgQDlb+qwYSd83+LUEtii2UtY9woYLA5joKkWjNRlFDGF34CstcMA\nVbhwscb9/axFaXX/qg4yrq5+5akUJEuwAa3TSM9+UAlldWOGFZhdNjUs2GaIqi6x\n8MeANzjdKzNggkUGBRl/U9zhgJKRh7dNfAXkf9rAmWvmNf5zEWcyzQlsHwKBgGtX\nCIxofdsOZzFI2oDrIYX+wl1mVQuwlhHyL7czJQZvr4FX+JJZoZ5qo+3UGwva387e\nRgtihcSCL+xb5MD1OLiCb15XcjkO/po+werNeefaRMBWWnCc07BXFTeOUlAobakn\n0KGUWqR9QwYMIY71tx6cagFyC4h1etQILXfidalnAoGAKfSpt8j5/K4G0jg4bO9n\nz8tC8T00gdlMDtHHMBxo2hm1YAYIB/6J9iK2AtfMKP0dyJ2a+swiEla1nuH00ZVK\niZlLG9gjcY3lC/UEpBDQ2qS5qIukPx7BacgO0wHrokEVPSUo8I7EFasFaYhD2Hxu\narjnFznTQctKAghIqDaHIfY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "sheetmuse@sheetmuse-190514.iam.gserviceaccount.com",
+  "client_id": "102620771135210293256",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/sheetmuse%40sheetmuse-190514.iam.gserviceaccount.com"
+}
