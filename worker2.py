@@ -21,8 +21,15 @@ For more information, see the README.md under /pubsub and the documentation
 at https://cloud.google.com/pubsub/docs
 """
 
+import platform
+op_system = platform.system()
+
+if op_system == 'Linux':
+    from google.cloud import pubsub as pubsub_v1
+else:
+    from google.cloud import pubsub_v1 as pubsub_v1
+
 import time
-from google.cloud import pubsub_v1 as pubsub_v1
 import os
 
 import json
