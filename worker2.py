@@ -29,8 +29,11 @@ import json
 import makemidi
 import subprocess
 import os
+from firebase import firebase
+import importaudio
 
 os.system('gcloud components update')
+
 # os.system('y')
 # os.system('rm -fr *.mid')
 
@@ -120,7 +123,10 @@ def receive_messages(project, subscription_name):
             print('bucket_id', bucket_id)
             print('object_id', object_id)
 
-            if '.3gp' in object_id or '.aac' in object_id or '.adts' in object_id or '.mp3' in object_id:
+            if '.3gp' in object_id or '.aac' in object_id or '.adts' in object_id or '.mp3' in object_id or '.mp4' in object_id:
+
+                # os.system('rm -f *.mid')
+                # os.system('rm -f *.aac')
 
                 print('downloading object...')
 
@@ -146,6 +152,12 @@ def receive_messages(project, subscription_name):
                 # midi_filename = md5Hash + '.mid'  # "major-scale.mid"
 
                 #### HERE IS WHERE ALGORITHM GOES #####
+                print 'object_id', object_id
+
+                audioFile = importaudio.processAudio(object_id)
+                audioFile.printFileName()
+                audioFile.playaudio()
+
                 # create midi file
                 audio_filename = object_id[0:19]
 
@@ -164,14 +176,22 @@ def receive_messages(project, subscription_name):
                     ' gs://' + bucket_id + '/' + midi_filename
                 upload_midi = 'gsutil cp ' + midi_filename + ' gs://' + bucket_id
                 os.system(upload_midi)
-                os.system(set_midi_metadata)
+                # os.system(set_midi_metadata)
+
+                print('updating database')
+                result = firebase.get(audio_filename, 'mididownload')
+                resultPut = firebase.put(
+                    audio_filename, 'midifile', midi_filename)
+                print('result = ', result)
+                print('resultPut = ', resultPut)
 
         message.ack()
         time.sleep(2)
-        print '\ncleaning out files:'  # , midi_filename, ' and ', object_id
+        print('\ncleaning out files:')  # , midi_filename, ' and ', object_id
         os.system('rm -f *.mid')  # , midi_filename)
         os.system('rm -f *.aac')  # , object_id)
-        time.sleep(2)
+        os.system('rm -f *.mp4')  # , object_id)
+        # time.sleep(7)
         print('\n\nDONE')
 
     subscriber.subscribe(subscription_path, callback=callback)
@@ -208,8 +228,9 @@ def receive_messages_with_flow_control(project, subscription_name):
 
 
 if __name__ == '__main__':
-    PROJECT_NAME = "firelearn-122c1"
-    # SUBSCRIPTION_NAME = "onsabimana_topic_subscription"
-    SUBSCRIPTION_NAME = "firelearn-122c1.appspot.com"
+    PROJECT_NAME = "SheetMuse"
+    SUBSCRIPTION_NAME = "monitor_sheetmuse_storage_bucket"
 
+    firebase = firebase.FirebaseApplication(
+        'https://sheetmuse.firebaseio.com/')
     receive_messages(PROJECT_NAME, SUBSCRIPTION_NAME)

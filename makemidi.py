@@ -2,7 +2,7 @@ from midiutil import MIDIFile
 
 
 def create_midi(midi_filename="major-scale.mid"):
-    degrees = [60, 62, 64, 65, 67, 69, 71, 72]  # MIDI note number
+    degrees = [60, 62, 64, 88, 67, 69, 71, 72]  # MIDI note number
     track = 0
     channel = 0
     time = 0    # In beats
@@ -10,7 +10,8 @@ def create_midi(midi_filename="major-scale.mid"):
     tempo = 60   # In BPM
     volume = 100  # 0-127, as per the MIDI standard
 
-    MyMIDI = MIDIFile(1)  # One track, defaults to format 1 (tempo track is created
+    # One track, defaults to format 1 (tempo track is created
+    MyMIDI = MIDIFile(1, adjust_origin=True)
     # automatically)
     MyMIDI.addTempo(track, time, tempo)
 
