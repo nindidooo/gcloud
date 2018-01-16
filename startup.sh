@@ -9,6 +9,8 @@ wget https://raw.githubusercontent.com/nindidooo/gcloud/master/requirements.txt
 wget https://raw.githubusercontent.com/nindidooo/gcloud/master/worker2.py
 
 wget https://raw.githubusercontent.com/nindidooo/gcloud/master/makemidi.py
+wget https://raw.githubusercontent.com/nindidooo/gcloud/master/importaudio.py
+
 
 curl https://bootstrap.pypa.io/get-pip.py | sudo python
 
