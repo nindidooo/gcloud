@@ -20,18 +20,7 @@ subscriptions with the Cloud Pub/Sub API.
 For more information, see the README.md under /pubsub and the documentation
 at https://cloud.google.com/pubsub/docs
 """
-
-import platform
-op_system = platform.system()
-
-if op_system == 'Linux':
-    from google.cloud import pubsub as pubsub_v1
-else:
-    from google.cloud import pubsub_v1 as pubsub_v1
-
 import time
-import os
-
 import json
 import makemidi
 import subprocess
@@ -39,16 +28,8 @@ import os
 from firebase import firebase
 import importaudio
 
-os.system('gcloud components update')
-
-# os.system('y')
-# os.system('rm -fr *.mid')
-
-# # Import gcloud
-# from google.cloud import storage
-
-# # Enable Storage
-# client = storage.Client()
+import os
+import platform
 
 
 def list_subscriptions_in_topic(project, topic_name):
@@ -162,8 +143,8 @@ def receive_messages(project, subscription_name):
                 print 'object_id', object_id
 
                 audioFile = importaudio.processAudio(object_id)
-                audioFile.printFileName()
-                audioFile.playaudio()
+                # audioFile.printFileName()
+                # audioFile.playaudio()
 
                 # create midi file
                 audio_filename = object_id[0:19]
@@ -193,7 +174,7 @@ def receive_messages(project, subscription_name):
                 print('resultPut = ', resultPut)
 
         message.ack()
-        time.sleep(2)
+        # time.sleep(2)
         print('\ncleaning out files:')  # , midi_filename, ' and ', object_id
         os.system('rm -f *.mid')  # , midi_filename)
         os.system('rm -f *.aac')  # , object_id)
@@ -207,7 +188,7 @@ def receive_messages(project, subscription_name):
     # exiting to allow it to process messages in the background.
     print('Listening for messages on {}'.format(subscription_path))
     while True:
-        time.sleep(60)
+        time.sleep(1)
 
 
 def receive_messages_with_flow_control(project, subscription_name):
@@ -235,6 +216,19 @@ def receive_messages_with_flow_control(project, subscription_name):
 
 
 if __name__ == '__main__':
+
+    op_system = platform.system()
+    print 'Environment detected:', op_system
+
+    if op_system == 'Linux':
+        from google.cloud import pubsub as pubsub_v1
+        os.system('sudo apt-get update && sudo apt-get --only-upgrade install kubectl google-cloud-sdk google-cloud-sdk-datastore-emulator google-cloud-sdk-pubsub-emulator google-cloud-sdk-app-engine-go google-cloud-sdk-app-engine-java google-cloud-sdk-app-engine-python google-cloud-sdk-cbt google-cloud-sdk-bigtable-emulator google-cloud-sdk-datalab')
+
+    else:  # mac
+
+        from google.cloud import pubsub_v1 as pubsub_v1
+        os.system('gcloud components update')
+
     PROJECT_NAME = "SheetMuse"
     SUBSCRIPTION_NAME = "monitor_sheetmuse_storage_bucket"
 
