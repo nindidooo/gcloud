@@ -222,12 +222,11 @@ if __name__ == '__main__':
 
     if op_system == 'Linux':
         from google.cloud import pubsub as pubsub_v1
-        os.system('sudo apt-get update && sudo apt-get --only-upgrade install kubectl google-cloud-sdk google-cloud-sdk-datastore-emulator google-cloud-sdk-pubsub-emulator google-cloud-sdk-app-engine-go google-cloud-sdk-app-engine-java google-cloud-sdk-app-engine-python google-cloud-sdk-cbt google-cloud-sdk-bigtable-emulator google-cloud-sdk-datalab')
+        # os.system('sudo apt-get update && sudo apt-get --only-upgrade install kubectl google-cloud-sdk google-cloud-sdk-datastore-emulator google-cloud-sdk-pubsub-emulator google-cloud-sdk-app-engine-go google-cloud-sdk-app-engine-java google-cloud-sdk-app-engine-python google-cloud-sdk-cbt google-cloud-sdk-bigtable-emulator google-cloud-sdk-datalab')
 
     else:  # mac
-
         from google.cloud import pubsub_v1 as pubsub_v1
-        os.system('gcloud components update')
+        # os.system('gcloud components update')
 
     PROJECT_NAME = "SheetMuse"
     SUBSCRIPTION_NAME = "monitor_sheetmuse_storage_bucket"
